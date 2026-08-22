@@ -1,0 +1,121 @@
+/** @format */
+
+import React from "react";
+import { assets } from "../assets/assets";
+
+export const Footer = () => {
+  return (
+    <footer className="bg-blue-50 [direction:rtl] mt-4 text-Blue-900">
+      <div className="mx-auto w-full px-4 md:px-6 lg:px-36 p-4 py-6 lg:py-8">
+        <div className="md:flex md:justify-between">
+          <div className="mb-6 md:mb-0">
+            <a href="#" className="flex items-center">
+              <img src={assets.logo} className="h-8 me-4" alt="FlowBite Logo" />
+              <span className="text-heading text-Blue-900 self-center text-2xl font-Cairo whitespace-nowrap">
+                مسعف
+              </span>
+            </a>
+          </div>
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+            <div>
+              <h2 className="mb-6 text-xl font-Cairo text-heading uppercase">
+                نظرة عامة
+              </h2>
+              <ul className="text-body font-medium">
+                <li className="mb-4">
+                  <a href="#" className="hover:underline">
+                    عن مسعف
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:underline">
+                    الطوارئ الصحية
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="mb-6 text-xl font-Cairo text-heading uppercase">
+                تابعونا علي
+              </h2>
+              <ul className="text-body font-medium">
+                <li className="mb-4">
+                  <a href="#" className="hover:underline ">
+                    فيسبوك
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:underline">
+                    اكس
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="mb-6 text-xl font-Cairo text-heading uppercase">
+                الاتصال والدعم
+              </h2>
+              <ul className="text-body font-medium">
+                <li className="mb-4">
+                  <a href="#" className="hover:underline">
+                    تواصل معنا
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:underline">
+                    الأسئلة الشائعة
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr className="my-6 border-default sm:mx-auto lg:my-8" />
+        <div className="sm:flex sm:items-center sm:justify-between">
+          <span className="text-xl text-body sm:text-center">
+            © 2025{"{"}" "{"}"}
+            <a href="#" className="hover:underline">
+              Mos3ef
+            </a>
+            . All Rights Reserved.
+          </span>
+          <div className="flex mt-4 sm:justify-center sm:mt-0">
+            <a href="#" className="text-body hover:text-heading">
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="sr-only">Facebook page</span>
+            </a>
+
+            <a href="#" className="text-body hover:text-heading ms-5">
+              <svg
+                className="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z" />
+              </svg>
+              <span className="sr-only">Twitter page</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
