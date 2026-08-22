@@ -8,6 +8,8 @@
 
 > **مسعف** هو منصة طبية رقمية متكاملة تربط المرضى بالمستشفيات والمراكز الصحية الشريكة، وتوفر خدمات البحث المتقدم، المقارنة الفورية بين الخدمات الطبية، حجز ومتابعة الخدمات، وتقييم تجارب الرعاية الصحية.
 
+📘 **[Read the Full Academic & Engineering Report (تقرير المشروع الكامل)](./Documentation/PROJECT_REPORT.md)** | 📸 **[View Full Screenshot Tour (معرض الصور)](./Documentation/Screenshots/README.md)** | 📑 **[Download Word Document (تقرير بصيغة Word)](./Mos3ef_Healthcare_Platform_Field_Training_Project_Report.docx)**
+
 ---
 
 ## 🌟 Key Features (المميزات الرئيسية)
