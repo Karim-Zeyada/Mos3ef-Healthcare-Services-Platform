@@ -12,7 +12,7 @@
 
 > **Mos3ef (مسعف)** is an integrated, full-stack healthcare services platform designed to bridge the gap between patients and healthcare providers (hospitals, clinics, and medical centers) across Egypt. It enables real-time medical service discovery across 18 specialties, interactive geolocation mapping, transparent side-by-side cost and feature comparisons, patient reviews and ratings, and a dedicated hospital administrative dashboard.
 
-📸 **[Explore the Visual Screenshot Tour](./Documentation/Screenshots/README.md)** | 📑 **[Download University Field Training Project Report (DOCX)](./NMU_Field_Training_Project_Report_Mos3ef.docx)** | ⚙️ **[Backend Documentation](./backend/README.md)** | 🎨 **[Frontend Documentation](./frontend/README.md)**
+📸 **[Explore the Visual Screenshot Tour](./Documentation/Screenshots/README.md)** | ⚙️ **[Backend Documentation](./backend/README.md)** | 🎨 **[Frontend Documentation](./frontend/README.md)**
 
 ---
 
@@ -40,6 +40,8 @@
 ## 🌟 Key Platform Features
 
 ### 👥 For Patients & General Public
+* **🤖 AI Medical Assistant & Symptom Triage (Powered by Gemini 2.5 Flash):** Intelligent conversational assistant providing real-time symptom analysis, clinical triage urgency rating (Emergency 🔴 / Urgent 🟡 / Routine 🟢), smart mapping to 18 medical specialties, quick suggestion chips, conversation memory, and immediate emergency referral links.
+* **🚨 Emergency SOS & Fast Triage Hub:** Instant access to 6 Egyptian national emergency hotlines (123 Ambulance, 137 ICU/Incubators, 16328 Poison Control, 126 Children's Emergency, 180 Civil Defense, 122 Police), GPS emergency location broadcasting (WhatsApp & SMS), 1-tap nearest ER radar, and interactive CPR audio metronome (110 BPM) + 7 step-by-step life-saving first-aid guides.
 * **🔍 Multi-Criteria Smart Discovery:** Search medical services by keyword, category/department (18 specialties), or hospital name with instant filtering.
 * **📍 Interactive Geolocation & Maps:** Integrated Leaflet & OpenStreetMap interactive maps for locating nearby hospitals and visualizing medical centers by GPS coordinates.
 * **⚖️ Side-by-Side Service Comparison:** Dynamic floating drawer comparing two healthcare services simultaneously (prices, ratings, working hours, 24/7 emergency availability, contact numbers, and hospital addresses).
@@ -128,11 +130,16 @@ Mos3ef/
         │   ├── SavedServices.jsx        # Paginated saved favorite medical services grid
         │   ├── SearchSection.jsx        # 18-category pill filter and search bar
         │   ├── Map.jsx                  # Leaflet & OpenStreetMap interactive facility locator
+        │   ├── Footer.jsx               # Structured responsive footer
         │   └── ProtectedRoute.jsx       # Client-side RBAC route guard
         ├── Context/                     # React Context State Providers (Auth, Hospital, Search, Compare)
         ├── hooks/                       # Custom hooks (useAuth, useCompare, useHospital)
         ├── layouts/                     # MainLayout (with Navbar/Footer) & DashboardLayout
-        ├── Pages/                       # Route pages (Home, Services, HospitalsList, About, Auth, Dashboard, Profile)
+        ├── Pages/                       # Route pages:
+        │   ├── Home/                    # Home, ServicesPage, About, EmergencyPage (SOS Hub)
+        │   ├── Hospital/                # HospitalsList, DashBoard
+        │   ├── Patient/                 # PatientProfile
+        │   └── Auth/                    # LogIn, SignUp, SignUpHospital
         └── utils/                       # imageHelper.js dynamic medical photo engine & Axios instance
 ```
 

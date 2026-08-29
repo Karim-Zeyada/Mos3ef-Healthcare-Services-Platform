@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import { MenuIcon, XIcon, Hospital } from "lucide-react";
+import { MenuIcon, XIcon, Hospital, HeartPulse } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
 import { PatientImage } from "./PatientImage";
@@ -15,6 +15,7 @@ export const NavBar = () => {
 
   const navItems = [
     { label: "الرئيسية", path: "/" },
+    { label: "الطوارئ", path: "/emergency", icon: HeartPulse },
     { label: "خدماتنا", path: "/services" },
     { label: "المستشفيات", path: "/hospitals" },
     { label: "من نحن", path: "/about" },
@@ -55,17 +56,26 @@ export const NavBar = () => {
           <ul className="hidden md:flex items-center justify-center gap-2 lg:gap-3 px-3 py-2 bg-Blue-900 rounded-[84px] [direction:rtl]">
             {navItems.map((item, index) => {
               const active = isActive(item.path);
+              const ItemIcon = item.icon;
+
               return (
                 <li key={index}>
                   <Link
                     to={item.path}
-                    className={`inline-flex items-center justify-center px-6 py-2 rounded-3xl font-Cairo text-sm lg:text-base whitespace-nowrap transition-all duration-200 ${
+                    className={`inline-flex items-center justify-center gap-1.5 px-5 lg:px-6 py-2 rounded-3xl font-Cairo text-sm lg:text-base whitespace-nowrap transition-all duration-200 ${
                       active
                         ? "bg-Blue text-white shadow-[0px_0px_8px_rgba(22,90,128,0.6)] font-semibold"
                         : "text-Blue-50 hover:bg-white/10 hover:text-white"
                     }`}
                   >
-                    {item.label}
+                    {ItemIcon && (
+                      <ItemIcon
+                        className={`w-4 h-4 transition-colors ${
+                          active ? "text-rose-300" : "text-rose-400"
+                        }`}
+                      />
+                    )}
+                    <span>{item.label}</span>
                   </Link>
                 </li>
               );
@@ -146,18 +156,27 @@ export const NavBar = () => {
           <ul className="flex flex-col items-center gap-3 mt-4 px-6 text-lg font-medium">
             {navItems.map((item, index) => {
               const active = isActive(item.path);
+              const ItemIcon = item.icon;
+
               return (
                 <li key={index} className="w-full text-center">
                   <Link
                     to={item.path}
-                    className={`px-5 py-2.5 rounded-full inline-block font-Cairo [direction:rtl] w-full transition-colors ${
+                    className={`px-5 py-2.5 rounded-full inline-flex items-center justify-center gap-2 font-Cairo [direction:rtl] w-full transition-colors ${
                       active
                         ? "bg-Blue text-white font-semibold"
                         : "text-Blue-50 hover:bg-white/10"
                     }`}
                     onClick={() => setShowMobileMenu(false)}
                   >
-                    {item.label}
+                    {ItemIcon && (
+                      <ItemIcon
+                        className={`w-4 h-4 ${
+                          active ? "text-rose-300" : "text-rose-400"
+                        }`}
+                      />
+                    )}
+                    <span>{item.label}</span>
                   </Link>
                 </li>
               );

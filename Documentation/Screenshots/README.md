@@ -13,7 +13,8 @@ This folder contains a comprehensive visual tour of the entire **Mos3ef** health
 | [`04_Services_Cards_Grid.png`](./04_Services_Cards_Grid.png) | High-resolution medical service cards grid with compare/call buttons. |
 | [`05_Service_Details_and_Reviews.png`](./05_Service_Details_and_Reviews.png) | Detailed service view, interactive photo gallery, and patient reviews carousel. |
 | [`06_Hospitals_Directory_Guest_Mode.png`](./06_Hospitals_Directory_Guest_Mode.png) | Public hospital directory with all partner hospital cards. |
-| [`07_About_Us_Developer_Karim.png`](./07_About_Us_Developer_Karim.png) | Dedicated "من نحن" page featuring Karim Zeyada developer card & mission banner. |
+| [`07_About_Us_Developer_Karim.png`](./07_About_Us_Developer_Karim.png) | Dedicated "من نحن" page featuring development team cards & mission banner. |
+| `Emergency_SOS_Hub.png` | Dedicated Emergency SOS Hub (`/emergency`) with 6 hotlines, GPS radar, and CPR metronome. |
 
 ---
 

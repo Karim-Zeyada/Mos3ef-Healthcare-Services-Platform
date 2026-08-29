@@ -22,6 +22,7 @@ import HospitalReviews from "./components/HospitalReviews";
 import { HospitalsList } from "./Pages/Hospital/HospitalsList";
 import { ServicesPage } from "./Pages/Home/ServicesPage";
 import { About } from "./Pages/Home/About";
+import { EmergencyPage } from "./Pages/Home/EmergencyPage";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <MainLayout>
               <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/emergency"
+          element={
+            <MainLayout>
+              <EmergencyPage />
             </MainLayout>
           }
         />
