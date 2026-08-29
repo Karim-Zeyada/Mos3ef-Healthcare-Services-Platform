@@ -38,7 +38,7 @@ namespace Mos3ef.DAL.DataSeed
                     UserName = adminEmail,
                     Email = adminEmail,
                     EmailConfirmed = true,
-                    UserType = UserType.Patient // Default or admin
+                    UserType = UserType.Patient
                 };
 
                 var createResult = await userManager.CreateAsync(adminUser, defaultPassword);
@@ -48,8 +48,68 @@ namespace Mos3ef.DAL.DataSeed
                 }
             }
 
-            // 3. Seed Hospitals (if none exist)
-            if (!await context.Hospitals.AnyAsync())
+            // Ensure Admin has a profile in Patients table so profile queries never fail with 404
+            if (adminUser != null && !await context.Patients.AnyAsync(p => p.UserId == adminUser.Id))
+            {
+                context.Patients.Add(new Patient
+                {
+                    Name = "مدير النظام (Admin)",
+                    UserId = adminUser.Id,
+                    Address = "القاهرة",
+                    Location = "القاهرة"
+                });
+                await context.SaveChangesAsync();
+            }
+
+            // 3. Ensure Dedicated Demo Hospital Admin
+            string demoHospitalEmail = "hospital@mos3ef.com";
+            var demoHospitalUser = await userManager.FindByEmailAsync(demoHospitalEmail);
+            if (demoHospitalUser == null)
+            {
+                demoHospitalUser = new ApplicationUser
+                {
+                    UserName = demoHospitalEmail,
+                    Email = demoHospitalEmail,
+                    EmailConfirmed = true,
+                    UserType = UserType.Hospital
+                };
+
+                var hResult = await userManager.CreateAsync(demoHospitalUser, "Hospital@123");
+                if (hResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(demoHospitalUser, "Hospital");
+
+                    var demoHospital = new Hospital
+                    {
+                        Name = "مستشفى مسعف النموذجي",
+                        UserId = demoHospitalUser.Id,
+                        Address = "شارع التحرير، الدقي، الجيزة",
+                        Region = "الجيزة",
+                        Phone_Number = "0237612345",
+                        Latitude = 30.0382,
+                        Longitude = 31.2124,
+                        Website = "https://mos3ef.com",
+                        Description = "المستشفى الرئيسي المعتمد لمنصة مسعف، يضم أحدث غرف العمليات والطوارئ 24/7 وجميع التخصصات الطبية.",
+                        ImageUrl = "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=600&auto=format&fit=crop",
+                        Opening_Hours = DateTime.Now
+                    };
+
+                    context.Hospitals.Add(demoHospital);
+                    await context.SaveChangesAsync();
+
+                    context.Services.AddRange(new[]
+                    {
+                        new Service { HospitalId = demoHospital.HospitalId, Name = "طوارئ وإنعاش مركزي 24/7", Category = CategoryType.EmergencyRoom, Price = 200, Availability = "متاح", Working_Hours = "24 ساعة", Description = "استقبال طوارئ مجهز بكامل أجهزة الإنعاش القلبي والرئوي واستشاريين على مدار الساعة." },
+                        new Service { HospitalId = demoHospital.HospitalId, Name = "عناية مركزة متقدمة (ICU)", Category = CategoryType.ICU, Price = 1500, Availability = "متاح", Working_Hours = "24 ساعة", Description = "أسرة عناية فائقة مزودة بأجهزة تنفس صناعي ومراقبة حيوية ذكية." },
+                        new Service { HospitalId = demoHospital.HospitalId, Name = "مركز الأشعة التشخيصية المتكامل", Category = CategoryType.Radiology, Price = 600, Availability = "متاح", Working_Hours = "24 ساعة", Description = "أشعة رنين مغناطيسي ومقطعية وسونار بدقة تشخيصية عالية." },
+                        new Service { HospitalId = demoHospital.HospitalId, Name = "صيدلية ومستلزمات طبية 24/7", Category = CategoryType.Pharmacy, Price = 0, Availability = "متاح", Working_Hours = "24 ساعة", Description = "صرف أدوية ومستلزمات الحالات الطارئة والمزمنة على مدار الساعة." }
+                    });
+                    await context.SaveChangesAsync();
+                }
+            }
+
+            // 4. Seed Standard Hospitals (if none exist)
+            if (!await context.Hospitals.AnyAsync(h => h.UserId != demoHospitalUser.Id))
             {
                 var hospitalData = new[]
                 {

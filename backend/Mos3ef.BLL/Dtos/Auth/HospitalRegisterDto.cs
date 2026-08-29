@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,8 +29,8 @@ namespace Mos3ef.BLL.Dtos.Auth
         [Compare("Password", ErrorMessage = "Password and Confirm Password must match.")]
         public string ConfirmPassword { get; set; } = null!;
 
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
     }
 
 }

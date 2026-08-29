@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "./ui/card";
 import { HospitalCard } from "./HospitalCard";
 import { Button } from "./ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, Heart } from "lucide-react";
 import axios from "axios";
 
 export const SavedServices = () => {
@@ -65,8 +65,8 @@ export const SavedServices = () => {
   };
 
   return (
-    <Card className="flex bg-white rounded-[20px] shadow-[0px_2px_4px_-2px_#0000001a,0px_4px_6px_-1px_#0000001a] border-0 animate-fade-in [--animation-delay:200ms]">
-      <CardContent className="flex flex-col items-center gap-7 px-8 py-6 w-full">
+    <Card className="flex flex-col w-full items-center bg-white rounded-[20px] shadow-[0px_2px_4px_-2px_#0000001a,0px_4px_6px_-1px_#0000001a] border-0 min-h-[456px] animate-fade-in [--animation-delay:200ms]">
+      <CardContent className="flex flex-col items-center gap-7 px-8 py-6 w-full flex-1">
         <div className="justify-end px-8 py-1 flex items-center gap-1 w-full">
           <h1 className="w-fit font-Cairo font-bold text-Blue-900 text-xl leading-6 whitespace-nowrap [direction:rtl] tracking-[0]">
             الخدمات المحفوظة
@@ -74,17 +74,20 @@ export const SavedServices = () => {
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-12 w-full">
+          <div className="flex items-center justify-center py-16 w-full flex-1">
             <Loader2 className="w-8 h-8 animate-spin text-Blue" />
           </div>
         ) : error ? (
-          <div className="text-red-500 font-Cairo text-center py-8 w-full [direction:rtl]">
+          <div className="text-red-500 font-Cairo text-center py-12 w-full flex-1 [direction:rtl]">
             {error}
           </div>
         ) : savedServices.length === 0 ? (
-          <div className="text-gray-500 font-Cairo text-center py-12 w-full [direction:rtl]">
-            <p className="text-lg">لا توجد خدمات محفوظة بعد</p>
-            <p className="text-sm mt-2">
+          <div className="flex flex-col items-center justify-center py-16 w-full flex-1 text-center [direction:rtl]">
+            <div className="w-16 h-16 rounded-full bg-Blue-50 flex items-center justify-center text-Blue-900 mb-4">
+              <Heart className="w-8 h-8 text-Blue" />
+            </div>
+            <p className="font-Cairo font-semibold text-lg text-gray-700">لا توجد خدمات محفوظة بعد</p>
+            <p className="font-Cairo text-sm text-gray-500 mt-1">
               يمكنك حفظ الخدمات من صفحة تفاصيل الخدمة
             </p>
           </div>

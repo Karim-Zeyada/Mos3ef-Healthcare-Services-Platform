@@ -149,11 +149,18 @@ export const HospitalsList = () => {
               أنت تتصفح جميع المستشفيات كزائر. سجل دخولك لمتابعة مستشفياتك المفضلة والخدمات المحفوظة.
             </p>
           </div>
-          <Link to="/LogIn" className="shrink-0">
-            <Button size="sm" className="bg-Blue text-white hover:bg-Blue-900 font-Cairo rounded-xl">
-              تسجيل الدخول
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link to="/SignUp-Hospital">
+              <Button size="sm" variant="outline" className="border-Blue-900/30 text-Blue-900 hover:bg-Blue-100/60 font-Cairo rounded-xl">
+                انضم كشريك طبي
+              </Button>
+            </Link>
+            <Link to="/LogIn">
+              <Button size="sm" className="bg-Blue text-white hover:bg-Blue-900 font-Cairo rounded-xl">
+                تسجيل الدخول
+              </Button>
+            </Link>
+          </div>
         </div>
       )}
 

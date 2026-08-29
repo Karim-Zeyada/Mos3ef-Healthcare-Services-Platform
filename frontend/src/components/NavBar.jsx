@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { assets } from "../assets/assets";
-import { MenuIcon, XIcon } from "lucide-react";
+import { MenuIcon, XIcon, Hospital } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
 import { PatientImage } from "./PatientImage";
@@ -74,6 +74,17 @@ export const NavBar = () => {
 
           {/* ----------Desktop Buttons---------- */}
           <div className="hidden md:flex items-center gap-2">
+            {!user && (
+              <Link
+                to="/SignUp-Hospital"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-3xl border border-Blue-900/30 hover:border-Blue-900 bg-Blue-50/60 hover:bg-Blue-50 transition-colors font-Cairo text-Blue-900 text-xs lg:text-sm font-semibold"
+                title="انضم كشريك طبي"
+              >
+                <Hospital className="w-4 h-4 text-Blue-900" />
+                <span>انضم كشريك</span>
+              </Link>
+            )}
+
             {user ? (
               <button
                 onClick={() => {
@@ -152,7 +163,21 @@ export const NavBar = () => {
               );
             })}
           </ul>
-          <div className="flex items-center gap-3 justify-center mt-10 px-6">
+
+          {!user && (
+            <div className="mt-6 px-6 w-full [direction:rtl]">
+              <Link
+                to="/SignUp-Hospital"
+                onClick={() => setShowMobileMenu(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-white/15 hover:bg-white/25 border border-white/20 text-white font-Cairo text-sm transition-all"
+              >
+                <Hospital className="w-4 h-4 text-Blue-100" />
+                <span>انضم كشريك طبي (مستشفى)</span>
+              </Link>
+            </div>
+          )}
+
+          <div className="flex items-center gap-3 justify-center mt-6 px-6">
             {user ? (
               <button
                 onClick={() => {

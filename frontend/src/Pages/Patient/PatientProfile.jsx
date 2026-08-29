@@ -8,14 +8,14 @@ import { SideBarMobile } from "../../components/SideBarMobile";
 
 export const PatientProfile = () => {
   return (
-    <>
-    <div className="pt-30 mx-auto px-3 md:px-6 lg:px-36 ">
-      <div className="flex justify-center lg:justify-between gap-10 bg-white w-full">
-          <SideBarMobile/>
-        <Outlet />
+    <div className="pt-28 pb-16 mx-auto px-4 md:px-6 lg:px-24 max-w-7xl">
+      <div className="flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-start gap-8 w-full">
+        <SideBarMobile />
+        <div className="flex-1 w-full min-w-0">
+          <Outlet />
+        </div>
         <PatientProfileSideBar />
       </div>
     </div>
-    </>
   );
 };

@@ -302,14 +302,21 @@ The platform includes pre-configured demo credentials for testing all user roles
 
 ---
 
-## 👨‍💻 Author & Developer
+## 👥 Development Team (فريق التطوير)
 
-**Karim Zeyada (كريم زيادة)**  
-*Full Stack Web Developer*  
-- **GitHub:** [@Karim-Zeyada](https://github.com/Karim-Zeyada)  
-- **Repository:** [Mos3ef-Healthcare-Services-Platform](https://github.com/Karim-Zeyada/Mos3ef-Healthcare-Services-Platform)
+| Member | Role | GitHub Profile |
+|---|---|---|
+| **Karim Zeyada** (كريم زيادة) | **Back-end Developer** | [@Karim-Zeyada](https://github.com/Karim-Zeyada) |
+| **Mostafa Nour Elden** (مصطفى نور الدين) | **UI/UX Designer** | [GitHub](https://github.com) |
+| **Mostafa Tamer** (مصطفى تامر) | **Back-end Developer** | [@Mostafa-Zhran](https://github.com/Mostafa-Zhran) |
+| **Mai Atef** (مي عاطف) | **Back-end Developer** | [@maiatef18](https://github.com/maiatef18) |
+| **Shahd AbdElghany** (شهد عبد الغني) | **Front-end Developer** | [@Shahd-Abdalghn](https://github.com/Shahd-Abdalghn) |
+| **Malk Hisham** (ملك هشام) | **AI Developer** | [GitHub](https://github.com) |
+
+- **GitHub Repository:** [Mos3ef-Healthcare-Services-Platform](https://github.com/Karim-Zeyada/Mos3ef-Healthcare-Services-Platform)
 
 ---
+
 
 ## 📄 License & Academic Reference
 

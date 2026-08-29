@@ -30,9 +30,11 @@ export const LogIn = () => {
   const onSubmit = async (data) => {
     const result = await login(data);
     if (result.success) {
-      
-      navigate("/");
-  
+      if (result.role === 1 || localStorage.getItem("userRole") === "1") {
+        navigate("/Hospital-DashBoard");
+      } else {
+        navigate("/");
+      }
     } else {
       alert(result.message || "حدث خطأ أثناء تسجيل الدخول");
     }

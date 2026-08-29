@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +32,8 @@ namespace Mos3ef.BLL.Mapping
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Hospital));
 
-            CreateMap<HospitalRegisterDto, Hospital>();
+            CreateMap<HospitalRegisterDto, Hospital>()
+                .ForMember(dest => dest.Phone_Number, opt => opt.MapFrom(src => src.PhoneNumber));
             
 
             CreateMap<ApplicationUser, AuthResponseDto>()

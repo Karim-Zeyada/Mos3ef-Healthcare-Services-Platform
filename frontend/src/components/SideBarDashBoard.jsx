@@ -1,136 +1,149 @@
 /** @format */
 
 import React from "react";
-import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
-import {useAuth} from '../hooks/useAuth.js'
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth.js";
+import { LayoutDashboard, Star, Settings, LogOut } from "lucide-react";
+
 const navigationItems = [
   {
     label: "لوحة التحكم",
-    icon: "https://c.animaapp.com/miks4oe9SWsilu/img/u-create-dashboard.svg",
-    active: true,
+    icon: LayoutDashboard,
     to: "/Hospital-DashBoard",
   },
   {
-    label: "التقيمات والمراجعات",
-    icon: "https://c.animaapp.com/miks4oe9SWsilu/img/u-star.svg",
-    active: false,
+    label: "التقييمات والمراجعات",
+    icon: Star,
     to: "/Hospital-DashBoard/reviews",
   },
   {
     label: "اعدادات المستشفى",
-    icon: "https://c.animaapp.com/miks4oe9SWsilu/img/u-setting.svg",
-    active: false,
+    icon: Settings,
     to: "/Hospital-DashBoard/update-profile",
   },
 ];
 
 export const SideBarDashBoard = () => {
- const navigate = useNavigate();
- const { logout } = useAuth(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuth();
+
+  const isItemActive = (to) => {
+    if (!to) return false;
+    if (to === "/Hospital-DashBoard") {
+      return (
+        location.pathname === "/Hospital-DashBoard" ||
+        location.pathname === "/Hospital-DashBoard/"
+      );
+    }
+    return location.pathname === to || location.pathname.startsWith(to);
+  };
+
   return (
     <>
-      <aside className="md:flex flex-col items-center hidden max-w-72  bg-[#1a2b45] min-h-screen  animate-fade-in [--animation-delay:0ms]">
-        <header className="flex flex-col  items-center px-0 py-3 w-full border-b-[0.8px]  border-[#fffefe1a]">
-          <div className="inline-flex h-[53px] items-center justify-center gap-2">
-            <h1 className="font-Cairo font-normal text-[#e9f5fb] text-2xl text-left tracking-[0] leading-[normal] [direction:rtl]">
-              مسعف
-            </h1>
-          </div>
+      {/* Desktop Sidebar */}
+      <aside className="md:flex flex-col items-center hidden w-72 bg-[#1a2b45] min-h-screen p-4 border-l border-white/10 animate-fade-in select-none">
+        <header className="flex flex-col items-center py-4 w-full border-b border-white/10 mb-4">
+          <h1 className="font-Cairo font-bold text-[#e9f5fb] text-2xl tracking-wide [direction:rtl]">
+            مسعف
+          </h1>
+          <span className="text-xs text-Blue-200/70 font-Cairo mt-1">
+            لوحة تحكم المنشأة الطبية
+          </span>
         </header>
 
-        <nav className="flex mt-2 mb-28 flex-col w-[274px] items-center gap-2 px-0 py-1  animate-fade-in [--animation-delay:200ms]">
-          {navigationItems.map((item, index) => (
-            <Button
-              onClick={() => navigate(item.to)}
-              key={index}
-              variant="ghost"
-              className={`w-full h-auto flex items-center justify-end gap-1 px-8 py-2 rounded-[20px] transition-colors hover:bg-[#d3eaf8]/10 ${
-                item.active
-                  ? "bg-[#d3eaf8] text-Blue-900 hover:bg-[#d3eaf8]"
-                  : "bg-transparent text-[#e9f5fb]"
-              }`}
-            >
-              <span className="font-Cairo font-normal text-xl text-left tracking-[0] leading-[normal] [direction:rtl]">
-                {item.label}
-              </span>
-              <img
-                className="max-w-12 w-5 max-h-12 h-5"
-                alt={item.label}
-                src={item.icon}
-              />
-            </Button>
-          ))}
+        <nav className="flex flex-col w-full items-stretch gap-2.5 my-2">
+          {navigationItems.map((item, index) => {
+            const active = isItemActive(item.to);
+            const Icon = item.icon;
+
+            return (
+              <button
+                key={index}
+                type="button"
+                onClick={() => navigate(item.to)}
+                className={`w-full flex items-center justify-end gap-3 px-5 py-3 rounded-2xl transition-all duration-200 font-Cairo text-lg cursor-pointer [direction:rtl] ${
+                  active
+                    ? "bg-[#d3eaf8] text-Blue-900 font-bold shadow-md ring-2 ring-[#d3eaf8]/40"
+                    : "text-[#e9f5fb] hover:bg-white/10 hover:text-white font-medium"
+                }`}
+              >
+                <span>{item.label}</span>
+                <Icon
+                  className={`w-5 h-5 shrink-0 transition-transform duration-200 ${
+                    active ? "text-Blue-900 scale-110" : "text-[#e9f5fb]/80"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </nav>
 
-        <footer className="w-[274px] mt-auto mb-3  animate-fade-in [--animation-delay:400ms]">
-          <Button
-            variant="ghost"
-            className="w-full h-auto bg-[#ffdcdcb2] hover:bg-[#ffdcdc] flex items-center justify-end gap-1 px-8 py-2 rounded-[20px] transition-colors"
+        <footer className="w-full mt-auto pt-4 border-t border-white/10">
+          <button
+            type="button"
             onClick={() => {
               logout();
               navigate("/");
             }}
+            className="w-full flex items-center justify-end gap-3 px-5 py-3 rounded-2xl bg-red-500/15 hover:bg-red-500/25 text-red-300 hover:text-red-200 border border-red-500/20 transition-all duration-200 font-Cairo text-lg font-semibold cursor-pointer [direction:rtl]"
           >
-            <span className="font-semibold text-[#0f3d57] font-Cairo text-xl text-left tracking-[0] leading-[normal] [direction:rtl]">
-              تسجيل الخروج
-            </span>
-            <img
-              className="max-w-12 w-5 max-h-12 h-5"
-              alt="تسجيل الخروج"
-              src="https://c.animaapp.com/miks4oe9SWsilu/img/u-exit.svg"
-            />
-          </Button>
+            <span>تسجيل الخروج</span>
+            <LogOut className="w-5 h-5 shrink-0 text-red-400" />
+          </button>
         </footer>
       </aside>
 
-      <aside className="md:hidden flex-col items-center flex w-14  bg-[#1a2b45] min-h-screen  animate-fade-in [--animation-delay:0ms]">
-        <header className="flex flex-col  items-center px-0 py-3 w-full border-b-[0.8px]  border-[#fffefe1a]">
-          <div className="inline-flex h-10 items-center justify-center gap-2">
-            <h1 className="font-Cairo font-normal text-[#e9f5fb] text-sm text-left tracking-[0] leading-[normal] [direction:rtl]">
-              مسعف
-            </h1>
-          </div>
+      {/* Mobile Mini Sidebar */}
+      <aside className="md:hidden flex flex-col items-center w-16 bg-[#1a2b45] min-h-screen py-4 px-2 border-l border-white/10 animate-fade-in select-none">
+        <header className="flex flex-col items-center pb-3 w-full border-b border-white/10 mb-4">
+          <h1 className="font-Cairo font-bold text-[#e9f5fb] text-sm">
+            مسعف
+          </h1>
         </header>
 
-        <nav className="flex mt-2 mb-28 flex-col w-6 items-center gap-2 px-0 py-1  animate-fade-in [--animation-delay:200ms]">
-          {navigationItems.map((item, index) => (
-            <Button
-              onClick={() => navigate(item.to)}
-              key={index}
-              variant="ghost"
-              className={`w-full h-auto flex items-center justify-center gap-1 px-3 py-1 rounded-[20px] transition-colors hover:bg-[#d3eaf8]/10 ${
-                item.active
-                  ? "bg-[#d3eaf8] text-Blue-900 hover:bg-[#d3eaf8]"
-                  : "bg-transparent text-[#e9f5fb]"
-              }`}
-            >
-              <img
-                className="max-w-12 w-5 max-h-12 h-5"
-                alt={item.label}
-                src={item.icon}
-              />
-            </Button>
-          ))}
+        <nav className="flex flex-col w-full items-center gap-3 my-2">
+          {navigationItems.map((item, index) => {
+            const active = isItemActive(item.to);
+            const Icon = item.icon;
+
+            return (
+              <button
+                key={index}
+                type="button"
+                onClick={() => navigate(item.to)}
+                title={item.label}
+                className={`p-3 rounded-2xl transition-all duration-200 cursor-pointer ${
+                  active
+                    ? "bg-[#d3eaf8] text-Blue-900 shadow-md ring-2 ring-[#d3eaf8]/40"
+                    : "text-[#e9f5fb] hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    active ? "text-Blue-900 scale-110" : "text-[#e9f5fb]/80"
+                  }`}
+                />
+              </button>
+            );
+          })}
         </nav>
 
-        <footer className="w-10 mt-auto mb-3  animate-fade-in [--animation-delay:400ms]">
-          <Button
+        <footer className="w-full mt-auto pt-3 border-t border-white/10 flex justify-center">
+          <button
+            type="button"
             onClick={() => {
               logout();
               navigate("/");
             }}
-            variant="ghost"
-            className="w-full h-auto bg-[#ffdcdcb2] hover:bg-[#ffdcdc] flex items-center justify-center gap-1 px-3 py-1 rounded-[20px] transition-colors"
+            title="تسجيل الخروج"
+            className="p-3 rounded-2xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/20 transition-all duration-200 cursor-pointer"
           >
-            <img
-              className="max-w-12 w-5 max-h-12 h-5"
-              alt="تسجيل الخروج"
-              src="https://c.animaapp.com/miks4oe9SWsilu/img/u-exit.svg"
-            />
-          </Button>
+            <LogOut className="w-5 h-5 text-red-400" />
+          </button>
         </footer>
       </aside>
     </>
   );
 };
+

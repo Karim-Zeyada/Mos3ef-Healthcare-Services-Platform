@@ -28,36 +28,52 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(`${baseUrl}Account/login`, data);
 
-      const token = res.data.data.token;
-      const userType = res.data.data.userType;
+      const authData = res.data?.data || res.data;
+      const token = authData?.token;
+      const userType = authData?.userType;
 
-      setRole(userType);
+      const normalizedRole = userType === 1 || userType === "Hospital" ? 1 : 0;
+      setRole(normalizedRole);
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userRole", userType);
+      localStorage.setItem("userRole", normalizedRole.toString());
 
       // ------------------- Fetch user Profile Immediately ------------------- //
-      const profileUrl =
-        userType == 0
-          ? `${baseUrl}Patients/my-profile`
-          : `${baseUrl}Hospital/Get-profile`;
-
-      const profileRes = await axios.get(profileUrl, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const userData = {
-        ...profileRes.data,
-        imageUrl: profileRes.data.imageUrl
-          ? `http://localhost:5000${profileRes.data.imageUrl}`
-          : null,
+      let userData = {
+        name: authData?.name || authData?.email || "المستخدم",
+        email: authData?.email,
+        userType: normalizedRole,
       };
+
+      try {
+        const profileUrl =
+          normalizedRole === 0
+            ? `${baseUrl}Patients/my-profile`
+            : `${baseUrl}Hospital/Get-profile`;
+
+        const profileRes = await axios.get(profileUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const profileData = profileRes.data?.data || profileRes.data;
+        if (profileData) {
+          userData = {
+            ...userData,
+            ...profileData,
+            imageUrl: profileData.imageUrl
+              ? (profileData.imageUrl.startsWith("http") ? profileData.imageUrl : `http://localhost:5000${profileData.imageUrl}`)
+              : null,
+          };
+        }
+      } catch (profileErr) {
+        console.warn("Could not fetch extended profile; using basic auth info:", profileErr);
+      }
 
       setUser(userData);
       console.log("Logged in user:", userData);
 
-      return { success: true };
+      return { success: true, role: normalizedRole };
     } catch (error) {
-      return { success: false, message: error.response?.data?.message };
+      return { success: false, message: error.response?.data?.message || "فشل تسجيل الدخول، يرجى التحقق من البيانات" };
     }
   };
 
@@ -67,24 +83,33 @@ export const AuthProvider = ({ children }) => {
     const storedRole = localStorage.getItem("userRole"); // 0 = Patient, 1 = Hospital
 
     if (token && storedRole !== null) {
+      const parsedRole = parseInt(storedRole, 10);
+      setRole(parsedRole);
+
       const profileUrl =
-        storedRole == "0"
+        parsedRole === 0
           ? `${baseUrl}Patients/my-profile`
           : `${baseUrl}Hospital/Get-profile`;
 
       axios
         .get(profileUrl, { headers: { Authorization: `Bearer ${token}` } })
         .then((res) => {
+          const profileData = res.data?.data || res.data;
           const userData = {
-            ...res.data.data,
-            imageUrl: res.data.data.imageUrl
-              ? `http://localhost:5000${res.data.data.imageUrl}`
+            ...profileData,
+            imageUrl: profileData?.imageUrl
+              ? (profileData.imageUrl.startsWith("http") ? profileData.imageUrl : `http://localhost:5000${profileData.imageUrl}`)
               : null,
           };
           setUser(userData);
-          setRole(parseInt(storedRole));
         })
-        .catch(() => logout());
+        .catch((err) => {
+          console.warn("Session check failed:", err);
+          // If profile fetch fails with 401 Unauthorized, log out
+          if (err.response?.status === 401) {
+            logout();
+          }
+        });
     }
   }, []);
 
@@ -220,19 +245,27 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-  // ------------------------ Register Hospital Function ------------------ //
   const registerHospital = async (data) => {
     try {
       const response = await axios.post(
         `${baseUrl}Account/register/hospital`,
         data
       );
-      console.log(response.data);
       return { success: true, data: response.data };
     } catch (error) {
+      const responseData = error.response?.data;
+      let errorMsg = responseData?.message || responseData?.Message;
+
+      if (!errorMsg && responseData?.errors) {
+        const errorList = Object.values(responseData.errors).flat();
+        errorMsg = errorList.join(", ");
+      }
+
       return {
         success: false,
-        message: error.response?.data?.message || "حدث خطأ، حاول مرة أخرى",
+        message:
+          errorMsg ||
+          "حدث خطأ أثناء التسجيل، يُرجى التأكد من صحة البيانات والمحاولة مرة أخرى",
       };
     }
   };
